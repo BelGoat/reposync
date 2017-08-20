@@ -23,7 +23,7 @@ docker run -rm -v /backup/centos7.x/repos:/opt/repos BelGoat/reposync:centos7 -p
 
 
 # HowTo's
-You can use this project in 4 different ways (See below full explanations):
+You can use this project in 3 different ways (See below full explanations):
 1. Use the docker as is and provide options/environments
 1. Build your own version to provide your own version of docker (no need for elaborated run liners)
 1. Use the repo_downloader.sh on existing server (pending dependencies)
