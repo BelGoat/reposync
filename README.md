@@ -1,6 +1,8 @@
 # reposync
-Basic Docker image that provide repository download (for preservation of fixed repo image)
+Basic Docker image that provide repository download (for preservation of fixed repo image).
+
 It includes repo_downloader.sh that can work without the docker.
+
 The docker image helps you download the repo without the need to have a working OS of the same version
 
 **Highly Suggested:** use --rm flag - there is no need to preserve the container after the work.
@@ -33,12 +35,12 @@ See short example from above and Option 3 for more options
 
 ## Option 2 - Build your own
 If you want your own version of the docker image just edit the docker file.
-The docker file is full of ENV Variables including all available options in the 
-repo_downloader.sh
-(repo_downloader.sh can get ENV variables instead of command line arguments
- Although the command line arguments will win when both are in place)
 
-Unique Dockerfile example (sync only EPEL and UPDATES and delete obselete packages with verbose mode):
+The docker file is full of ENV Variables including all available options in the repo_downloader.sh
+
+(repo_downloader.sh can get ENV variables instead of command line arguments Although the command line arguments will win when both are in place)
+
+**Unique Dockerfile example (sync only EPEL and UPDATES and delete obselete packages with verbose mode):**
 ```
 FROM BelGoat/reposync:centos7
 
@@ -54,10 +56,11 @@ ENV DELETE_LOCAL_PACKAGES yes
 ```
 
 This example will not need any options - only mount for the download (-v).
-Every time you run the docker it will download only updates and epel or update the existing repo
+
+Every time you run the docker it will download only updates and epel or update the existing repos
 
 ## Option 3 - Use the repo_downloader.sh
-repo_downloader.sh is self explanatory:
+**repo_downloader.sh is self explanatory:**
 ```
 [root@docker-server]# ./repo_downloader.sh  -h
 repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_download]
@@ -108,4 +111,3 @@ repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_
    With Variables:
     REPO_NAME_PREFIX="`date +%Y%m%d`" REPO_DOWNLOAD_LOCATION='/opt/repos/' REPO_BASE_DOWNLOAD='yes' REPO_EPEL_DOWNLOAD='yes' 
 ```
-
