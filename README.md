@@ -9,17 +9,17 @@ The docker image helps you download the repo without the need to have a working 
 
 # Short HowTo:
 ```
-docker run --rm -v /path/to/repo/dest:/opt/repos BelGoat/reposync:centos7 {OPTIONS}
+docker run --rm -v /path/to/repo/dest:/opt/repos belgoat/reposync:centos7 {OPTIONS}
 # Help:
-docker run --rm BelGoat/reposync:centos7 -h
+docker run --rm belgoat/reposync:centos7 -h
 ```
 **Examples**
 ```
 # Download base, updates, extras repos
-docker run -rm -v /backup/centos7.x/repos:/opt/repos BelGoat/reposync:centos7 -r "base updates extras"
+docker run -rm -v /backup/centos7.x/repos:/opt/repos belgoat/reposync:centos7 -r "base updates extras"
 
 # Download updates with specific time (preserve specific repo image)
-docker run -rm -v /backup/centos7.x/repos:/opt/repos BelGoat/reposync:centos7 -p `date +%Y%m%d`_ -r "updates"
+docker run -rm -v /backup/centos7.x/repos:/opt/repos belgoat/reposync:centos7 -p `date +%Y%m%d`_ -r "updates"
 # result in /backup/centos7.x/repos/YYYYMMDD_extras directory
 ```
 
@@ -42,7 +42,7 @@ The docker file is full of ENV Variables including all available options in the 
 
 **Unique Dockerfile example (sync only EPEL and UPDATES and delete obselete packages with verbose mode):**
 ```
-FROM BelGoat/reposync:centos7
+FROM belgoat/reposync:centos7
 
 ENV REPO_DOWNLOAD_LOCATION "/opt/repos"
 # Repos to download
