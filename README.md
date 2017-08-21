@@ -7,6 +7,10 @@ The docker image helps you download the repo without the need to have a working 
 
 **Highly Suggested:** use --rm flag - there is no need to preserve the container after the work.
 
+# Supported tags and respective Branches links
+* latest, centos7 ([master/centos7](https://github.com/BelGoat/reposync))
+* centos6, 6 ([centos6](https://github.com/BelGoat/reposync/tree/centos6))
+
 # Short HowTo:
 ```
 docker run --rm -v /path/to/repo/dest:/opt/repos belgoat/reposync:centos7 {OPTIONS}
