@@ -71,7 +71,21 @@ repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_
 
  OPTIONS
     -r "list of repos"    List of repos to download
-                            (Support: base updates extras centosplus cr fasttrack epel)
+                            (Supported repos:
+                              base, base-source, base-debuginfo
+                              updates, updates-source
+                              extras, extras-source
+                              centosplus, centosplus-updates
+                              cr
+                              fasttrack
+                              epel, epel-source, epel-debuginfo
+                              c7-media
+                              openshift-origin
+                              openstack-kilo
+                              opstools-release
+                              sclo-rh
+                              sclo-sclo )
+
     -p prefix               prefix addition to repo directory name
     -q postfix              postfix addition to repo directory name
     -h                      Print this help
@@ -91,12 +105,26 @@ repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_
     REPO_NAME_PREFIX ''
     REPO_NAME_POSTFIX ''
 
-    REPO_BASE_DOWNLOAD       no|yes
-    REPO_CENTOSPLUS_DOWNLOAD no|yes
-    REPO_EXTRAS_DOWNLOAD     no|yes
-    REPO_CR_DOWNLOAD         no|yes
-    REPO_FASTTRACK_DOWNLOAD  no|yes
-    REPO_EPEL_DOWNLOAD       no|yes
+    REPO_BASE_DOWNLOAD                  no|yes
+    REPO_BASE_SOURCE_DOWNLOAD           no|yes
+    REPO_BASE_DEBUGINFO_DOWNLOAD        no|yes
+    REPO_UPDATES_DOWNLOAD               no|yes
+    REPO_UPDATES_SOURCE_DOWNLOAD        no|yes
+    REPO_EXTRAS_DOWNLOAD                no|yes
+    REPO_EXTRAS_SOURCE_DOWNLOAD         no|yes
+    REPO_CENTOSPLUS_DOWNLOAD            no|yes
+    REPO_CENTOSPLUS_UPDATES_DOWNLOAD    no|yes
+    REPO_CR_DOWNLOAD                    no|yes
+    REPO_FASTTRACK_DOWNLOAD             no|yes
+    REPO_EPEL_DOWNLOAD                  no|yes
+    REPO_EPEL_SOURCE_DOWNLOAD           no|yes
+    REPO_EPEL_DEBUGINFO_DOWNLOAD        no|yes
+    REPO_C7_MEDIA_DOWNLOAD              no|yes
+    REPO_OPENSHIFT_ORIGIN_DOWNLOAD      no|yes
+    REPO_OPENSTACK_KILO_DOWNLOAD        no|yes
+    REPO_OPSTOOLS_RELEASE_DOWNLOAD      no|yes
+    REPO_SCLO_RH_DOWNLOAD               no|yes
+    REPO_SCLO_SCLO_DOWNLOAD             no|yes
 
     REPOSYNC_VERBOSE         no|yes
     CREATEREPO_VERBOSE       no|yes
@@ -107,7 +135,7 @@ repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_
 
  EXAMPLES
    With Params:
-     -p "`date +%Y%m%d`" -r 'base extras centosplus' /opt/repos/
+    repo_downloader.sh -p "`date +%Y%m%d`" -r 'base extras centosplus' /opt/repos/
    With Variables:
-    REPO_NAME_PREFIX="`date +%Y%m%d`" REPO_DOWNLOAD_LOCATION='/opt/repos/' REPO_BASE_DOWNLOAD='yes' REPO_EPEL_DOWNLOAD='yes' 
+    REPO_NAME_PREFIX="`date +%Y%m%d`" REPO_DOWNLOAD_LOCATION='/opt/repos/' REPO_BASE_DOWNLOAD='yes' REPO_EPEL_DOWNLOAD='yes' repo_downloader.sh
 ```
