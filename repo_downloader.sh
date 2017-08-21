@@ -33,19 +33,17 @@ HELP="
  OPTIONS
     -r \"list of repos\"    List of repos to download
                             (Supported repos:
-                              base, base-source, base-debuginfo
-                              updates, updates-source
-                              extras, extras-source
-                              centosplus, centosplus-updates
-                              cr
-                              fasttrack
+                              base, base-debuginfo
+                              updates 
+                              extras
+                              centosplus
+                              contrib
                               epel, epel-source, epel-debuginfo
-                              c7-media
-                              openshift-origin
-                              openstack-kilo
-                              opstools-release
+                              c6-media
+                              openstack-juno
                               sclo-rh
-                              sclo-sclo )
+                              sclo-sclo
+                              virt-xen )
 
     -p prefix               prefix addition to repo directory name
     -q postfix              postfix addition to repo directory name
@@ -75,17 +73,15 @@ HELP="
     REPO_EXTRAS_SOURCE_DOWNLOAD         no|yes
     REPO_CENTOSPLUS_DOWNLOAD            no|yes
     REPO_CENTOSPLUS_UPDATES_DOWNLOAD    no|yes
-    REPO_CR_DOWNLOAD                    no|yes
-    REPO_FASTTRACK_DOWNLOAD             no|yes
+    REPO_CONTRIB_UPDATES_DOWNLOAD       no|yes
     REPO_EPEL_DOWNLOAD                  no|yes
     REPO_EPEL_SOURCE_DOWNLOAD           no|yes
     REPO_EPEL_DEBUGINFO_DOWNLOAD        no|yes
-    REPO_C7_MEDIA_DOWNLOAD              no|yes
-    REPO_OPENSHIFT_ORIGIN_DOWNLOAD      no|yes
-    REPO_OPENSTACK_KILO_DOWNLOAD        no|yes
-    REPO_OPSTOOLS_RELEASE_DOWNLOAD      no|yes
+    REPO_C6_MEDIA_DOWNLOAD              no|yes
+    REPO_OPENSTACK_JUNO_DOWNLOAD        no|yes
     REPO_SCLO_RH_DOWNLOAD               no|yes
     REPO_SCLO_SCLO_DOWNLOAD             no|yes
+    REPO_VIRT_XEN_DOWNLOAD              no|yes
 
     REPOSYNC_VERBOSE         no|yes
     CREATEREPO_VERBOSE       no|yes
@@ -144,23 +140,14 @@ function setRepoIDVariables {
             "base")
                 REPO_BASE_DOWNLOAD=yes
             ;;
-            "base-source")
-                REPO_BASE_SOURCE_DOWNLOAD=yes
-            ;;
             "base-debuginfo")
                 REPO_BASE_DEBUGINFO_DOWNLOAD=yes
             ;;
             "updates")
                 REPO_UPDATES_DOWNLOAD=yes
             ;;
-            "updates-source")
-                REPO_UPDATES_SOURCE_DOWNLOAD=yes
-            ;;
             "extras")
                 REPO_EXTRAS_DOWNLOAD=yes
-            ;;
-            "extras-source")
-                REPO_EXTRAS_SOURCE_DOWNLOAD=yes
             ;;
             "centosplus")
                 REPO_CENTOSPLUS_DOWNLOAD=yes
@@ -168,11 +155,8 @@ function setRepoIDVariables {
             "centosplus-updates")
                 REPO_CENTOSPLUS_UPDATES_DOWNLOAD=yes
             ;;
-            "cr")
-                REPO_CR_DOWNLOAD=yes
-            ;;
-            "fasttrack")
-                REPO_FASTTRACK_DOWNLOAD=yes
+            "contrib")
+                REPO_CONTRIB_DOWNLOAD=yes
             ;;
             "epel")
                 REPO_EPEL_DOWNLOAD=yes
@@ -183,23 +167,20 @@ function setRepoIDVariables {
             "epel-debuginfo")
                 REPO_EPEL_DEBUGINFO_DOWNLOAD=yes
             ;;
-            "c7-media")
-                REPO_C7_MEDIA_DOWNLOAD=yes
+            "c6-media")
+                REPO_C6_MEDIA_DOWNLOAD=yes
             ;;
-            "openshift-origin")
-                REPO_OPENSHIFT_ORIGIN_DOWNLOAD=yes
-            ;;
-            "openstack-kilo")
-                REPO_OPENSTACK_KILO_DOWNLOAD=yes
-            ;;
-            "opstools-release")
-                REPO_OPSTOOLS_RELEASE_DOWNLOAD=yes
+            "openstack-juno")
+                REPO_OPENSTACK_JUNO_DOWNLOAD=yes
             ;;
             "sclo-rh")
                 REPO_SCLO_RH_DOWNLOAD=yes
             ;;
             "sclo-sclo")
                 REPO_SCLO_SCLO_DOWNLOAD=yes
+            ;;
+            "virt-xen")
+                REPO_VIRT_XEN_DOWNLOAD=yes
             ;;
             *)
                 echo "WARNING: Repository \"$1\" not available, Ignoring"
@@ -293,9 +274,9 @@ function syncRepo {
     
     cmd_line="/usr/bin/reposync $REPOSYNC_VERBOSE_VAR $DELETE_LOCAL_PACKAGES_VAR -l --norepopath --downloadcomps --download-metadata --repoid=${repoID} --download_path=${DOWNLOAD_PATH}/${repoDirName}"
 
-    if [ ! -d ${DOWNLOAD_PATH_OPT}${DOWNLOAD_PATH}/${repoDirName} ]
+    if [ ! -d ${DOWNLOAD_PATH}/${repoDirName} ]
     then
-        mkdir ${DOWNLOAD_PATH_OPT}${DOWNLOAD_PATH}/${repoDirName}
+        mkdir ${DOWNLOAD_PATH}/${repoDirName}
     fi
 
     echo "###########################################################"
@@ -308,7 +289,7 @@ function syncRepo {
     echo "###########################################################"
     echo "# Generating Repo from downloaded files for $repoID"
     echo "###########################################################"
-    if [[ -e ${DOWNLOAD_PATH_OPT}${DOWNLOAD_PATH}/${repoDirName}/comps.xml ]]
+    if [[ -e ${DOWNLOAD_PATH}/${repoDirName}/comps.xml ]]
     then
         createrepo $CREATEREPO_VERBOSE_VAR  ${DOWNLOAD_PATH}/${repoDirName} -g ${DOWNLOAD_PATH}/${repoDirName}/comps.xml
     else
@@ -321,10 +302,6 @@ if [ ! -z $REPO_BASE_DOWNLOAD ] && [ ${REPO_BASE_DOWNLOAD} == "yes" ]
 then
     syncRepo base 
 fi
-if [ ! -z $REPO_BASE_SOURCE_DOWNLOAD ] && [ ${REPO_BASE_SOURCE_DOWNLOAD} == "yes" ]
-then
-    syncRepo base-source
-fi
 if [ ! -z $REPO_BASE_DEBUGINFO_DOWNLOAD ] && [ ${REPO_BASE_DEBUGINFO_DOWNLOAD} == "yes" ]
 then
     syncRepo base-debuginfo
@@ -333,33 +310,17 @@ if [ ! -z $REPO_UPDATES_DOWNLOAD ] && [ ${REPO_UPDATES_DOWNLOAD} == "yes" ]
 then
     syncRepo updates
 fi
-if [ ! -z $REPO_UPDATES_SOURCE_DOWNLOAD ] && [ ${REPO_UPDATES_SOURCE_DOWNLOAD} == "yes" ]
-then
-    syncRepo updates-source
-fi
 if [ ! -z  ${REPO_EXTRAS_DOWNLOAD} ] && [ ${REPO_EXTRAS_DOWNLOAD} == "yes" ]
 then
     syncRepo extras
-fi
-if [ ! -z  ${REPO_EXTRAS_SOURCE_DOWNLOAD} ] && [ ${REPO_EXTRAS_SOURCE_DOWNLOAD} == "yes" ]
-then
-    syncRepo extras-source
 fi
 if [ ! -z $REPO_CENTOSPLUS_DOWNLOAD ] && [ ${REPO_CENTOSPLUS_DOWNLOAD} == "yes" ]
 then
     syncRepo centosplus
 fi
-if [ ! -z $REPO_CENTOSPLUS_SOURCE_DOWNLOAD ] && [ ${REPO_CENTOSPLUS_SOURCE_DOWNLOAD} == "yes" ]
+if [ ! -z  ${REPO_CONTRIB_DOWNLOAD} ] && [ ${REPO_CONTRIB_DOWNLOAD} == "yes" ]
 then
-    syncRepo centosplus-source
-fi
-if [ ! -z  ${REPO_CR_DOWNLOAD} ] && [ ${REPO_CR_DOWNLOAD} == "yes" ]
-then
-    syncRepo cr 
-fi
-if [ ! -z ${REPO_FASTTRACK_DOWNLOAD} ] && [ ${REPO_FASTTRACK_DOWNLOAD} == "yes" ]
-then
-    syncRepo fasttrack 
+    syncRepo contrib
 fi
 if [ ! -z ${REPO_EPEL_DOWNLOAD} ] && [ ${REPO_EPEL_DOWNLOAD} == "yes" ]
 then
@@ -373,21 +334,13 @@ if [ ! -z ${REPO_EPEL_DEBUGINFO_DOWNLOAD} ] && [ ${REPO_EPEL_DEBUGINFO_DOWNLOAD}
 then
     syncRepo epel-debuginfo
 fi
-if [ ! -z ${REPO_C7_MEDIA_DOWNLOAD} ] && [ ${REPO_C7_MEDIA_DOWNLOAD} == "yes" ]
+if [ ! -z ${REPO_C6_MEDIA_DOWNLOAD} ] && [ ${REPO_C6_MEDIA_DOWNLOAD} == "yes" ]
 then
-    syncRepo c7-media
+    syncRepo c6-media
 fi
-if [ ! -z ${REPO_OPENSHIFT_ORIGIN_DOWNLOAD} ] && [ ${REPO_OPENSHIFT_ORIGIN_DOWNLOAD} == "yes" ]
+if [ ! -z ${REPO_OPENSTACK_JUNO_DOWNLOAD} ] && [ ${REPO_OPENSTACK_JUNO_DOWNLOAD} == "yes" ]
 then
-    syncRepo centos-openshift-origin
-fi
-if [ ! -z ${REPO_OPENSTACK_KILO_DOWNLOAD} ] && [ ${REPO_OPENSTACK_KILO_DOWNLOAD} == "yes" ]
-then
-    syncRepo centos-openstack-kilo
-fi
-if [ ! -z ${REPO_OPSTOOLS_RELEASE_DOWNLOAD} ] && [ ${REPO_OPSTOOLS_RELEASE_DOWNLOAD} == "yes" ]
-then
-    syncRepo centos-opstools-release
+    syncRepo centos-openstack-juno
 fi
 if [ ! -z ${REPO_SCLO_RH_DOWNLOAD} ] && [ ${REPO_SCLO_RH_DOWNLOAD} == "yes" ]
 then
@@ -396,4 +349,8 @@ fi
 if [ ! -z ${REPO_SCLO_SCLO_DOWNLOAD} ] && [ ${REPO_SCLO_SCLO_DOWNLOAD} == "yes" ]
 then
     syncRepo centos-sclo-sclo
+fi
+if [ ! -z ${REPO_VIRT_XEN_DOWNLOAD} ] && [ ${REPO_VIRT_XEN_DOWNLOAD} == "yes" ]
+then
+    syncRepo centos-virt-xen
 fi

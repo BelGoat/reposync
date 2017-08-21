@@ -17,17 +17,15 @@ ENV REPO_EXTRAS_DOWNLOAD no
 ENV REPO_EXTRAS_SOURCE_DOWNLOAD no
 ENV REPO_CENTOSPLUS_DOWNLOAD no
 ENV REPO_CENTOSPLUS_UPDATES_DOWNLOAD no
-ENV REPO_CR_DOWNLOAD no
-ENV REPO_FASTTRACK_DOWNLOAD no
+ENV REPO_CONTRIB_UPDATES_DOWNLOAD no
 ENV REPO_EPEL_DOWNLOAD no
 ENV REPO_EPEL_SOURCE_DOWNLOAD no
 ENV REPO_EPEL_DEBUGINFO_DOWNLOAD no
-ENV REPO_C7_MEDIA_DOWNLOAD no
-ENV REPO_OPENSHIFT_ORIGIN_DOWNLOAD no
-ENV REPO_OPENSTACK_KILO_DOWNLOAD no
-ENV REPO_OPSTOOLS_RELEASE_DOWNLOAD no
+ENV REPO_C6_MEDIA_DOWNLOAD no
+ENV REPO_OPENSTACK_JUNO_DOWNLOAD no
 ENV REPO_SCLO_RH_DOWNLOAD no
 ENV REPO_SCLO_SCLO_DOWNLOAD no
+ENV REPO_VIRT_XEN_DOWNLOAD no
 
 # Other download Variables
 ENV REPOSYNC_VERBOSE no
@@ -41,11 +39,11 @@ ENV DELETE_LOCAL_PACKAGES no
 RUN yum install -y \
         centos-release \
         epel-release \
-        centos-release-openshift-origin \
         centos-release-openstack \
-        centos-release-opstools \
         centos-release-scl-rh \
         centos-release-scl \
+        centos-release-xen \
+        centos-release-virt-common \
         yum-utils deltarpm createrepo \
      && yum --enablerepo=* clean all \
      && rm -rf /var/cache/yum
