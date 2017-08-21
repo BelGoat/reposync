@@ -48,8 +48,7 @@ RUN yum install -y \
         centos-release-scl \
         yum-utils deltarpm createrepo \
      && yum --enablerepo=* clean all \
-     && rm -rf /var/cache/yum \
-     && rm -f /etc/yum.repos.d/*.repo
+     && rm -rf /var/cache/yum
 
 
 COPY repo_downloader.sh /root/repo_downloader.sh
