@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:6
 MAINTAINER BelGoat <belgoat@gmail.com>
 
 ENV REPO_DOWNLOAD_LOCATION "/opt/repos"
