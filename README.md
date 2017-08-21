@@ -9,7 +9,7 @@ The docker image helps you download the repo without the need to have a working 
 
 # Supported tags and respective Branches links
 * latest, centos7 ([master/centos7](https://github.com/BelGoat/reposync))
-* centos6, 6 ([centos6](https://github.com/BelGoat/reposync/tree/centos6))
+* centos6 ([centos6](https://github.com/BelGoat/reposync/tree/centos6))
 
 # Short HowTo:
 ```
