@@ -67,7 +67,7 @@ Every time you run the docker it will download only updates and epel or update t
 **repo_downloader.sh is self explanatory:**
 ```
 [root@docker-server]# ./repo_downloader.sh  -h
-repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_download]
+repo_downloader.sh [-hvuVcd] [-p prefix] [-q suffix] [-r "repo list"] [path_to_download]
 
  DESCRIPTION
     This script download centos repos to directory
@@ -91,7 +91,7 @@ repo_downloader.sh [-hvuVcd] [-p prefix] [-q postfix] [-r "repo list"] [path_to_
                               sclo-sclo )
 
     -p prefix               prefix addition to repo directory name
-    -q postfix              postfix addition to repo directory name
+    -q suffix               suffix addition to repo directory name
     -h                      Print this help
     -u                      Print usage
     -V                      Print script information

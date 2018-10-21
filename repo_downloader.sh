@@ -24,7 +24,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION=0.1.0
-USAGE="`basename "$0"` [-hvuVcd] [-p prefix] [-q postfix] [-r \"repo list\"] [path_to_download]"
+USAGE="`basename "$0"` [-hvuVcd] [-p prefix] [-q suffix] [-r \"repo list\"] [path_to_download]"
 HELP="
  DESCRIPTION
     This script download centos repos to directory
@@ -48,7 +48,7 @@ HELP="
                               sclo-sclo )
 
     -p prefix               prefix addition to repo directory name
-    -q postfix              postfix addition to repo directory name
+    -q suffix               suffix addition to repo directory name
     -h                      Print this help
     -u                      Print usage
     -V                      Print script information
